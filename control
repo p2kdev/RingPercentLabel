@@ -1,0 +1,9 @@
+Package: com.p2kdev.ringpercentlabel
+Name: RingPercentLabel
+Depends: firmware (>= 14.0),mobilesubstrate
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Percent Labels for the Battery Widget Rings!
+Maintainer: P2KDev <p2kdev@gmail.com>
+Author: P2KDev <p2kdev@gmail.com>
+Section: Tweaks
