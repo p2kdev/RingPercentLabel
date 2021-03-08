@@ -11,10 +11,12 @@
 		if ([self.superview class] == objc_getClass("BCUIChargeRing"))
 		{
 			arg1.origin.y = 20;
-			//Attempt to fix the huge bluetooth icon
-			arg1.origin.x = 12;
-			arg1.size.width = 36;
-			arg1.size.height = 36;
+			//Attempt to fix the huge bluetooth icon by standardizing the size
+			BCUIChargeRing *parentView = (BCUIChargeRing*)self.superview;
+			double standardSize = parentView.frame.size.height - 26;
+			arg1.origin.x = parentView.frame.size.width/2 - standardSize/2;
+			arg1.size.width = standardSize;
+			arg1.size.height = standardSize;
 		}
 
 		%orig;
