@@ -3,16 +3,27 @@
 	@property(nonatomic, retain) UILabel *ringPercentLabel;
 @end
 
+%hook UIImageView
+
+	-(void)setFrame:(CGRect)arg1
+	{
+		//Hacky but works! Also it's safe since we validate the superview
+		if ([self.superview class] == objc_getClass("BCUIChargeRing"))
+		{
+			arg1.origin.y = 20;
+			//Attempt to fix the huge bluetooth icon
+			arg1.origin.x = 12;
+			arg1.size.width = 36;
+			arg1.size.height = 36;
+		}
+
+		%orig;
+	}
+
+%end
+
 %hook BCUIChargeRing
 	%property (nonatomic, retain) UILabel *ringPercentLabel;
-
-	-(void)layoutSubviews
-	{
-		%orig;
-		//Move the glyph down
-		UIImageView* imgView = MSHookIvar<UIImageView*>(self,"_glyphImageView");
-		imgView.frame = CGRectMake(imgView.frame.origin.x,20,imgView.frame.size.width,imgView.frame.size.height);
-	}
 
 	-(void)setGlyph:(id)arg1
 	{
