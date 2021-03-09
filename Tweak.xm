@@ -1,3 +1,7 @@
+@interface UIView (Tweak)
+	- (id)_viewControllerForAncestor;
+@end
+
 @interface BCUIChargeRing : UIView
 	@property(nonatomic, assign, readwrite) NSInteger *percentCharge;
 	@property(nonatomic, retain) UILabel *ringPercentLabel;
@@ -8,7 +12,7 @@
 	-(void)setFrame:(CGRect)arg1
 	{
 		//Hacky but works! Also it's safe since we validate the superview
-		if ([self.superview class] == objc_getClass("BCUIChargeRing") && arg1.origin.y > 0)
+		if (([self.superview class] == objc_getClass("BCUIChargeRing")) && arg1.origin.y >= 0 && ([[self _viewControllerForAncestor] isKindOfClass:%c(BCUI2x2AvocadoViewController)]))
 		{
 			arg1.origin.y = 20;
 			//Attempt to fix the huge bluetooth icon by standardizing the size
@@ -31,7 +35,7 @@
 	{
 		%orig;
 
-		if(!self.ringPercentLabel){
+		if(!self.ringPercentLabel && ([[self _viewControllerForAncestor] isKindOfClass:%c(BCUI2x2AvocadoViewController)])){
 
 			self.ringPercentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 			[self addSubview:self.ringPercentLabel];
@@ -52,6 +56,7 @@
 	-(void)setPercentCharge:(int)arg1
 	{
 		%orig;
-		self.ringPercentLabel.text = [NSString stringWithFormat:@"%d", arg1];
+		if (self.ringPercentLabel)
+			self.ringPercentLabel.text = [NSString stringWithFormat:@"%d", arg1];
 	}
 %end
