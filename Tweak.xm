@@ -8,7 +8,7 @@
 	-(void)setFrame:(CGRect)arg1
 	{
 		//Hacky but works! Also it's safe since we validate the superview
-		if ([self.superview class] == objc_getClass("BCUIChargeRing"))
+		if ([self.superview class] == objc_getClass("BCUIChargeRing") && arg1.origin.y > 0)
 		{
 			arg1.origin.y = 20;
 			//Attempt to fix the huge bluetooth icon by standardizing the size
