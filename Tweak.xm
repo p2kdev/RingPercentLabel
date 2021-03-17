@@ -57,6 +57,15 @@
 	{
 		%orig;
 		if (self.ringPercentLabel)
-			self.ringPercentLabel.text = [NSString stringWithFormat:@"%d", arg1];
+		{
+			if (arg1 > 0)
+			{
+				self.ringPercentLabel.text = [NSString stringWithFormat:@"%d", arg1];
+				self.ringPercentLabel.hidden = NO;
+			}
+			else
+				self.ringPercentLabel.hidden = YES;
+		}
+
 	}
 %end
