@@ -1,5 +1,5 @@
 export THEOS_PACKAGE_SCHEME=rootless
-export TARGET = iphone:clang:12.4:12.0
+export TARGET = iphone:clang:13.7:13.0
 
 PACKAGE_VERSION=$(THEOS_PACKAGE_BASE_VERSION)
 

@@ -7,11 +7,17 @@
 	@property(nonatomic, retain) UILabel *ringPercentLabel;
 @end
 
-%hook UIImageView
+@interface BCUIGlyphImageView : UIImageView
+@end
+
+@implementation BCUIGlyphImageView
+
+@end
+
+%hook BCUIGlyphImageView
 
 	-(void)setFrame:(CGRect)arg1
 	{
-		//Hacky but works! Also it's safe since we validate the superview
 		if (([self.superview class] == objc_getClass("BCUIChargeRing")) && arg1.origin.y >= 0 && ([[self _viewControllerForAncestor] isKindOfClass:%c(BCUI2x2AvocadoViewController)]))
 		{
 			arg1.origin.y = 20;
@@ -30,6 +36,12 @@
 
 %hook BCUIChargeRing
 	%property (nonatomic, retain) UILabel *ringPercentLabel;
+
+	-(id)_glyphImageView {
+		UIImageView *orig = %orig;
+		object_setClass(orig, [BCUIGlyphImageView class]);
+		return orig;
+	}
 
 	-(void)setGlyph:(id)arg1
 	{
